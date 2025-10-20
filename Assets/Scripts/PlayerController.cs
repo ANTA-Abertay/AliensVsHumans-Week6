@@ -4,9 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody _rb;
-
-    private float _movementX;
-    private float _movementY;
+    
+    private Vector2 _movement;
 
     public float speed = 10;
 
@@ -24,8 +23,7 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
 
         // Store the X and Y components of the movement.
-        _movementX = movementVector.x;
-        _movementY = movementVector.y;
+        _movement = new Vector2(movementVector.x, movementVector.y);
     }
 
     void OnJump()
@@ -38,16 +36,16 @@ public class PlayerController : MonoBehaviour
         // Spawn a bullet and store a reference to it so you can manipulate its values.
         GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
         // Apply force if using Rigidbody
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
-            rb.AddForce(new Vector2(_movementX, _movementY), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(_movement.x, _movement.y), ForceMode.Impulse);
     }
 
     // FixedUpdate is called once per fixed frame-rate frame.
     private void FixedUpdate()
     {
         // Create a 3D movement vector using the X and Y inputs.
-        Vector3 movement = new Vector3(_movementX, 0.0f, _movementY);
+        Vector3 movement = new Vector3(_movement.x, 0.0f, _movement.y);
 
         // Apply force to the Rigidbody to move the player.
         _rb.AddForce(movement * speed);
