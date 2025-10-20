@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     public float speed = 0;
 
+    public GameObject bulletPrefab;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -24,6 +26,21 @@ public class PlayerController : MonoBehaviour
         // Store the X and Y components of the movement.
         movementX = movementVector.x;
         movementY = movementVector.y;
+    }
+
+    void OnJump()
+    {
+        Shoot();
+    }
+
+    void Shoot()
+    {
+        // Spawn a bullet and store a reference to it so you can manipulate its values.
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        // Apply force if using Rigidbody
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        if (rb != null)
+            rb.AddForce(new Vector2(movementX, movementY), ForceMode2D.Impulse);
     }
 
     // FixedUpdate is called once per fixed frame-rate frame.
