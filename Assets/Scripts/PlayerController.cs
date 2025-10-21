@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
 
         // Store the X and Y components of the movement.
-        _movement = new Vector2(-movementVector.x, -movementVector.y);
+        _movement = new Vector2(-movementVector.x, movementVector.y);
 
        
         transform.rotation = Quaternion.LookRotation(_movement, Vector3.up);
