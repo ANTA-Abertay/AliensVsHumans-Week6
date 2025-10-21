@@ -6099,6 +6099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   bulletPrefab: {fileID: 1156228223691968319, guid: 1b2713cd2693e4656ae0e8bbd0a4f95c, type: 3}
+  target: {fileID: 1961662356}
 --- !u!114 &1961662358
 MonoBehaviour:
   m_ObjectHideFlags: 0
