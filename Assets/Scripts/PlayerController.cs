@@ -1,8 +1,12 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class PlayerController : MonoBehaviour
 {
+    Rigidbody m_Rigidbody;
+    Vector3 m_EulerAngleVelocity;
     private Rigidbody _rb;
     
     private Vector2 _movement;
@@ -11,20 +15,14 @@ public class PlayerController : MonoBehaviour
 
     public GameObject bulletPrefab;
     public Transform target;
+    public float rotationSpeed;
 
-    Rigidbody m_Rigidbody;
-    Vector3 m_EulerAngleVelocity;
+   
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        //Fetch the Rigidbody from the GameObject with this script attached
-        m_Rigidbody = GetComponent<Rigidbody>();
-
-        //Set the angular velocity of the Rigidbody (rotating around the Y axis, 100 deg/sec)
-        m_EulerAngleVelocity = new Vector3(0, 100, 0);
-
     }
 
     // This function is called when a move input is detected.
@@ -35,6 +33,9 @@ public class PlayerController : MonoBehaviour
 
         // Store the X and Y components of the movement.
         _movement = new Vector2(movementVector.x, movementVector.y);
+
+       
+        transform.rotation = Quaternion.LookRotation(_movement, Vector3.up);
     }
 
     void OnJump()
@@ -59,13 +60,17 @@ public class PlayerController : MonoBehaviour
     {
         // Create a 3D movement vector using the X and Y inputs.
         Vector3 movement = new Vector3(_movement.x, 0.0f, _movement.y);
-
+        movement.Normalize();
         // Apply force to the Rigidbody to move the player.
         _rb.AddForce(movement * speed);
 
-        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
-        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
+
     }
+    
+
+
+    
 }
+
 
 
