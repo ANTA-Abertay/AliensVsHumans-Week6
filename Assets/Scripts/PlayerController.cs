@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour
     public float speed = 10;
 
     public GameObject bulletPrefab;
-
+      
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
     }
 
     // This function is called when a move input is detected.
