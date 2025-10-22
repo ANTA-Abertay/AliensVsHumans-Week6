@@ -16,13 +16,14 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
+    public Animation animation;
 
-   
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        animation = GetComponent<Animation>();
     }
 
     // This function is called when a move input is detected.
@@ -34,7 +35,6 @@ public class PlayerController : MonoBehaviour
         // Store the X and Y components of the movement.
         _movement = new Vector2(-movementVector.x, movementVector.y);
 
-       
         transform.rotation = Quaternion.LookRotation(_movement, Vector3.up);
     }
 
@@ -64,13 +64,20 @@ public class PlayerController : MonoBehaviour
         // Apply force to the Rigidbody to move the player.
         _rb.AddForce(movement * speed);
 
+        if ((_movement.x != 0) || (_movement.y!= 0)) ;
+        {
+            animation.Play("walk");
+        }
+
 
     }
-    
-
 
     
 }
+
+
+    
+
 
 
 
