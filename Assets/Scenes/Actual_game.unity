@@ -6308,7 +6308,6 @@ GameObject:
   - component: {fileID: 1961662355}
   - component: {fileID: 1961662354}
   - component: {fileID: 1961662357}
-  - component: {fileID: 1961662360}
   - component: {fileID: 1961662359}
   - component: {fileID: 1961662361}
   m_Layer: 0
@@ -6377,7 +6376,7 @@ Transform:
   m_GameObject: {fileID: 1961662353}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.72217655, z: -0, w: 0.69170874}
-  m_LocalPosition: {x: -1.39, y: -0.081, z: 2.124}
+  m_LocalPosition: {x: -1.39, y: -0.08100003, z: 2.124}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6400,6 +6399,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1156228223691968319, guid: 1b2713cd2693e4656ae0e8bbd0a4f95c, type: 3}
   target: {fileID: 1961662356}
   rotationSpeed: 500
+  animation: {fileID: 0}
 --- !u!111 &1961662359
 Animation:
   m_ObjectHideFlags: 0
@@ -6412,33 +6412,12 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 38809f31ec56f2c4bb0e5a7a755f9ce9, type: 2}
   m_Animations:
   - {fileID: 0}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
+  - {fileID: 7400000, guid: 38809f31ec56f2c4bb0e5a7a755f9ce9, type: 2}
+  m_WrapMode: 2
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
---- !u!95 &1961662360
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1961662353}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 56cba1ef0ab74dd45b930d61d793a76d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1961662361
 MonoBehaviour:
   m_ObjectHideFlags: 0
