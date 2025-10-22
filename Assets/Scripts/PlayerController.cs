@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
         _movement = new Vector2(-movementVector.x, movementVector.y);
 
         transform.rotation = Quaternion.LookRotation(_movement, Vector3.up);
+        animation.Play("walk");
     }
 
     void OnJump()
@@ -64,10 +65,10 @@ public class PlayerController : MonoBehaviour
         // Apply force to the Rigidbody to move the player.
         _rb.AddForce(movement * speed);
 
-        if ((_movement.x != 0) || (_movement.y!= 0)) ;
-        {
-            animation.Play("walk");
-        }
+        //if ((_movement.x != 0) || (_movement.y!= 0)) ;
+        //{
+            //animation.Play("walk");
+       // }
 
 
     }
