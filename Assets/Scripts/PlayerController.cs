@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _movement;
 
     public float speed = 10;
-
+    private Vector3 oldPos;
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         animation = GetComponent<Animation>();
+        oldPos = gameObject.transform.position;
     }
 
     // This function is called when a move input is detected.
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
         _movement = new Vector2(-movementVector.x, movementVector.y);
 
         transform.rotation = Quaternion.LookRotation(_movement, Vector3.up);
-        animation.Play("walk");
+        //animation.Play("walk");
     }
 
     void OnJump()
@@ -64,12 +65,16 @@ public class PlayerController : MonoBehaviour
         movement.Normalize();
         // Apply force to the Rigidbody to move the player.
         _rb.AddForce(movement * speed);
+        
+        Vector3 newPos = gameObject.transform.position;
+        
 
-        //if ((_movement.x != 0) || (_movement.y!= 0)) ;
-        //{
-            //animation.Play("walk");
-       // }
-
+        if ((newPos[0] - oldPos[0])!=0)
+        {
+            animation.Play("walk");
+            
+        }
+          oldPos = newPos;
 
     }
 
