@@ -6232,7 +6232,6 @@ GameObject:
   - component: {fileID: 1846050866}
   - component: {fileID: 1846050865}
   - component: {fileID: 1846050864}
-  - component: {fileID: 1846050863}
   - component: {fileID: 1846050862}
   m_Layer: 0
   m_Name: Plane
@@ -6260,30 +6259,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 0.66, z: 10}
-  m_Center: {x: 0, y: -0.65, z: 0}
---- !u!64 &1846050863
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846050861}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 10, y: 1, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1846050864
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6307,7 +6284,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 63128cf401c9bae41b8acc59d8e15505, type: 2}
+  - {fileID: 2100000, guid: 2fb8d3b1337eafc4fbe16f9fe6a830e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6346,8 +6323,8 @@ Transform:
   m_GameObject: {fileID: 1846050861}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.17, y: 0, z: 7.21}
-  m_LocalScale: {x: 25, y: 25, z: 25}
+  m_LocalPosition: {x: -14, y: 0, z: 0}
+  m_LocalScale: {x: 50, y: 1, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -6780,7 +6757,7 @@ GameObject:
   - component: {fileID: 1961662359}
   - component: {fileID: 1961662361}
   m_Layer: 0
-  m_Name: Player 2
+  m_Name: Player_2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6805,10 +6782,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.26
-  m_Height: 0.87
+  m_Radius: 0.22908717
+  m_Height: 0.7627189
   m_Direction: 1
-  m_Center: {x: 0.03, y: 0.42, z: 0}
+  m_Center: {x: 0.11908725, y: 0.66, z: 0.03}
 --- !u!54 &1961662355
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6845,7 +6822,7 @@ Transform:
   m_GameObject: {fileID: 1961662353}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.72217655, z: -0, w: 0.69170874}
-  m_LocalPosition: {x: -1.39, y: -0.08100003, z: 2.124}
+  m_LocalPosition: {x: -1.234, y: -0.079, z: 2.131}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6869,6 +6846,7 @@ MonoBehaviour:
   target: {fileID: 1961662356}
   rotationSpeed: 500
   animation: {fileID: 0}
+  test: 0
 --- !u!111 &1961662359
 Animation:
   m_ObjectHideFlags: 0
