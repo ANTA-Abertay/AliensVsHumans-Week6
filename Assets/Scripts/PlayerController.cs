@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 _movement;
 
     public float speed = 10;
-    public float zLock = 0;
     private Vector3 oldPos;
     public GameObject bulletPrefab;
     public Transform target;
@@ -67,8 +66,6 @@ public class PlayerController : MonoBehaviour
         movement.Normalize();
         // Apply force to the Rigidbody to move the player.
         _rb.AddForce(movement * speed);
-
-        transform.position = new Vector3(transform.position.x, transform.position.y, zLock);
         
         // walk animation
         Vector3 newPos = gameObject.transform.position; 
