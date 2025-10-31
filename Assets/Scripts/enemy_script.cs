@@ -84,40 +84,40 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void ChasePlayer()
+   private void ChasePlayer()
+{
+    navAgent.SetDestination(player.position);
+    animator.SetFloat("Velocity", 0.6f);
+    navAgent.isStopped = false; // Add this line
+}
+
+
+  private void AttackPlayer()
+{
+    navAgent.SetDestination(transform.position);
+
+    if (!alreadyAttacked)
     {
-        navAgent.SetDestination(player.position);
-        animator.SetFloat("Velocity", 0.6f);
-        navAgent.isStopped = false; // Add this line
-    }
+        transform.LookAt(player.position);
+        alreadyAttacked = true;
+        animator.SetBool("Attack", true);
+        Invoke(nameof(ResetAttack), timeBetweenAttacks);
 
-
-    private void AttackPlayer()
-    {
-        navAgent.SetDestination(transform.position);
-
-        if (!alreadyAttacked)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, attackRange))
         {
-            transform.LookAt(player.position);
-            alreadyAttacked = true;
-            animator.SetBool("Attack", true);
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            /*
+                YOU CAN USE THIS TO GET THE PLAYER HUD AND CALL THE TAKE DAMAGE FUNCTION
 
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, attackRange))
+            PlayerHUD playerHUD = hit.transform.GetComponent<PlayerHUD>();
+            if (playerHUD != null)
             {
-                /*
-                    YOU CAN USE THIS TO GET THE PLAYER HUD AND CALL THE TAKE DAMAGE FUNCTION
-
-                PlayerHUD playerHUD = hit.transform.GetComponent<PlayerHUD>();
-                if (playerHUD != null)
-                {
-                   playerHUD.takeDamage(damage);
-                }
-                 */
+               playerHUD.takeDamage(damage);
             }
+             */
         }
     }
+}
 
 
     private void ResetAttack()
@@ -165,3 +165,5 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 }
+
+//https://github.com/sopermanspace/Enemy
