@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed;
     public Animation animation;
 
+    [SerializeField] private int test = 0;
+
 
     void Start()
     {
@@ -49,10 +51,14 @@ public class PlayerController : MonoBehaviour
     {
         // Spawn a bullet and store a reference to it so you can manipulate its values.
         GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        if (_rb != null)
+            _rb.AddForce(Vector3.up * 100f,ForceMode.Force);
+        Debug.Log(_rb.linearVelocity);
         // Apply force if using Rigidbody
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
             rb.AddForce(new Vector2(_movement.x, _movement.y), ForceMode.Impulse);
+        Debug.Log($"Movement input: {_movement}");
 
        
     }
