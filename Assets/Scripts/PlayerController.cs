@@ -12,11 +12,13 @@ public class PlayerController : MonoBehaviour
     private Vector2 _movement;
 
     public float speed = 10;
+    public float zLock = 0;
     private Vector3 oldPos;
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
     public Animation animation;
+    
 
 
     void Start()
@@ -61,14 +63,15 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         // Create a 3D movement vector using the X and Y inputs.
-        Vector3 movement = new Vector3(_movement.x, 0.0f, _movement.y);
+        Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f);
         movement.Normalize();
         // Apply force to the Rigidbody to move the player.
         _rb.AddForce(movement * speed);
-        
-        Vector3 newPos = gameObject.transform.position;
-        
 
+        transform.position = new Vector3(transform.position.x, transform.position.y, zLock);
+        
+        // walk animation
+        Vector3 newPos = gameObject.transform.position; 
         if ((newPos[0] - oldPos[0])!=0)
         {
             animation.Play("walk");
