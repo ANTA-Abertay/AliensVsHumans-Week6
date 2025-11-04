@@ -16,9 +16,6 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
-   
-
-    
 
 
     void Start()
