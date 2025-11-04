@@ -8,13 +8,11 @@ public class Enemy : MonoBehaviour
     public Transform player;
     public LayerMask groundLayer, playerLayer;
     public float health;
-    public float walkPointRange;
     public float timeBetweenAttacks;
     public float sightRange;
     public float attackRange;
     public int damage;
-    public Animator animator;
-    public ParticleSystem hitEffect;
+
 
 
     private bool _alreadyAttacked;
