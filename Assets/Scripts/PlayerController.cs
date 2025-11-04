@@ -66,8 +66,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         // Create a 3D movement vector using the X and Y inputs.
-        Vector3 movement = new Vector3(_movement.x, 0.0f, _movement.y);
-        movement.Normalize();
+        Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f);
         // Apply force to the Rigidbody to move the player.
         _rb.AddForce(movement * speed);
         
