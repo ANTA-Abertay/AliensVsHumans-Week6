@@ -10,13 +10,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     
     private Vector2 _movement;
-
+    public int health = 10;
     public float speed = 10;
     private Vector3 _oldPos;
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
-
+    
 
     void Start()
     {
@@ -74,7 +74,9 @@ public class PlayerController : MonoBehaviour
             GetComponent<Animation>().Play("walk");
             
         }
-          _oldPos = newPos;
+        _oldPos = newPos;
+        
+        
 
     }
 
