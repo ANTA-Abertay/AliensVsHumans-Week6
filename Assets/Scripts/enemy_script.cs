@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         player = GameObject.Find("Player").transform;
         navAgent = GetComponent<NavMeshAgent>();
     }
@@ -78,6 +77,10 @@ public class Enemy : MonoBehaviour
              
         }
     }
+    else
+        {
+            player.health =- damage;
+        }
 }
 
 
@@ -89,7 +92,6 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        hitEffect.Play();
         StartCoroutine(TakeDamageCoroutine());
 
         if (health <= 0)

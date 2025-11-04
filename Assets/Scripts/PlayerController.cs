@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
-    public Animation animation;
+   
 
     [SerializeField] private int test = 0;
 
@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        animation = GetComponent<Animation>();
         oldPos = gameObject.transform.position;
     }
 
@@ -39,7 +38,7 @@ public class PlayerController : MonoBehaviour
         _movement = new Vector2(-movementVector.x, movementVector.y);
 
         transform.rotation = Quaternion.LookRotation(_movement, Vector3.up);
-        //animation.Play("walk");
+        
     }
 
     void OnJump()
@@ -77,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
         if ((newPos[0] - oldPos[0])!=0)
         {
-            animation.Play("walk");
+            GetComponent<Animation>().Play("walk");
             
         }
           oldPos = newPos;
