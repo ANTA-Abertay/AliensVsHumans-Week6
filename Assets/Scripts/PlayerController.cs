@@ -5,27 +5,26 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody m_Rigidbody;
-    Vector3 m_EulerAngleVelocity;
+    Rigidbody _mRigidbody;
+    Vector3 _mEulerAngleVelocity;
     private Rigidbody _rb;
     
     private Vector2 _movement;
 
     public float speed = 10;
-    private Vector3 oldPos;
+    private Vector3 _oldPos;
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
    
 
-    [SerializeField] private int test = 0;
+    
 
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        oldPos = gameObject.transform.position;
+        _oldPos = gameObject.transform.position;
     }
 
     // This function is called when a move input is detected.
@@ -73,12 +72,12 @@ public class PlayerController : MonoBehaviour
         Vector3 newPos = gameObject.transform.position;
         
 
-        if ((newPos[0] - oldPos[0])!=0)
+        if ((newPos[0] - _oldPos[0])!=0)
         {
             GetComponent<Animation>().Play("walk");
             
         }
-          oldPos = newPos;
+          _oldPos = newPos;
 
     }
 
