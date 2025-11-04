@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player_2").transform;
         navAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour
     }
     else
         {
-            player.health =- damage;
+            //player.health =- damage;
         }
 }
 
