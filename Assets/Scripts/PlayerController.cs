@@ -16,15 +16,15 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
-    public Animation animation;
-    
+   
+
+    [SerializeField] private int test = 0;
 
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        animation = GetComponent<Animation>();
         oldPos = gameObject.transform.position;
     }
 
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
         _movement = new Vector2(-movementVector.x, movementVector.y);
 
         transform.rotation = Quaternion.LookRotation(_movement, Vector3.up);
-        //animation.Play("walk");
+        
     }
 
     void OnJump()
@@ -50,10 +50,14 @@ public class PlayerController : MonoBehaviour
     {
         // Spawn a bullet and store a reference to it so you can manipulate its values.
         GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        if (_rb != null)
+            _rb.AddForce(Vector3.up * 100f,ForceMode.Force);
+        Debug.Log(_rb.linearVelocity);
         // Apply force if using Rigidbody
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
             rb.AddForce(new Vector2(_movement.x, _movement.y), ForceMode.Impulse);
+        Debug.Log($"Movement input: {_movement}");
 
        
     }
@@ -62,16 +66,17 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         // Create a 3D movement vector using the X and Y inputs.
-        Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f);
+        Vector3 movement = new Vector3(_movement.x, 0.0f, _movement.y);
         movement.Normalize();
         // Apply force to the Rigidbody to move the player.
         _rb.AddForce(movement * speed);
         
-        // walk animation
-        Vector3 newPos = gameObject.transform.position; 
+        Vector3 newPos = gameObject.transform.position;
+        
+
         if ((newPos[0] - oldPos[0])!=0)
         {
-            animation.Play("walk");
+            GetComponent<Animation>().Play("walk");
             
         }
           oldPos = newPos;
