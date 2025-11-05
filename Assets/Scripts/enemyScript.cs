@@ -5,22 +5,23 @@ public class EnemyScript : MonoBehaviour
 {
     NavMeshAgent _enemy;
     GameObject _player;
-    int health = 10;
+    public int health = 10;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _enemy = GetComponent<NavMeshAgent>();
-
+        _player = GameObject.FindWithTag("Player");
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        _player = GameObject.FindWithTag("Player");
+        
         _enemy.SetDestination(_player.transform.position);
+        
         var posDif = (_enemy.transform.position - _player.transform.position);
         if (posDif.magnitude < 2)
         {
@@ -28,9 +29,14 @@ public class EnemyScript : MonoBehaviour
             GameObject.Find("Player").GetComponent<PlayerController>().health -= 2;
 
         }
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTrigger(Collider col)
     {
         if(col.CompareTag("Bullet"))
         {

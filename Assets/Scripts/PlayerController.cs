@@ -27,15 +27,17 @@ public class PlayerController : MonoBehaviour
     // This function is called when a move input is detected.
     void OnMove(InputValue movementValue)
     {
-        // Convert the input value into a Vector2 for movement.
-        Vector2 movementVector = movementValue.Get<Vector2>();
+        Vector2 movementVector = movementValue.Get<Vector2>(); // since movement is a 2d vector 
+        _movement = new Vector2(-movementVector.x, movementVector.y); // since we don't want to move on the z axis
 
-        // Store the X and Y components of the movement.
-        _movement = new Vector2(-movementVector.x, movementVector.y);
-
-        transform.rotation = Quaternion.LookRotation(_movement, Vector3.up);
-        
+        // If moving left/right, flip the player visually.
+        if (_movement.x != 0) // if they are moving
+        {
+            float yRotation = _movement.x > 0 ? 90f : -90f; // facing right or left 
+            transform.rotation = Quaternion.Euler(0, yRotation, 0); // rotates the asset to face left or right
+        }
     }
+
 
     void OnJump()
     {
@@ -47,7 +49,7 @@ public class PlayerController : MonoBehaviour
         // Spawn a bullet and store a reference to it so you can manipulate its values.
         GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
         if (_rb != null)
-            _rb.AddForce(Vector3.up * 100f,ForceMode.Force);
+            _rb.AddForce(Vector3.up * 80f,ForceMode.Force);
         Debug.Log(_rb.linearVelocity);
         // Apply force if using Rigidbody
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
@@ -61,24 +63,23 @@ public class PlayerController : MonoBehaviour
     // FixedUpdate is called once per fixed frame-rate frame.
     private void FixedUpdate()
     {
-        // Create a 3D movement vector using the X and Y inputs.
-        Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f);
-        // Apply force to the Rigidbody to move the player.
-        _rb.AddForce(movement * speed);
+        Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f); // only moves in x-axis
+        _rb.AddForce(movement * speed); // times the x-axis with speed so player moves
         
-        Vector3 newPos = gameObject.transform.position;
-        
-
-        if ((newPos[0] - _oldPos[0])!=0)
-        {
-            GetComponent<Animation>().Play("walk");
-            
-        }
-        _oldPos = newPos;
-        
-        
-
     }
+
+    void Update()
+    {
+        Vector3 newPos = transform.position; // gets current position 
+
+        if ((newPos.x - _oldPos.x) != 0) // checks if positions are different
+        {
+            GetComponent<Animation>().Play("walk"); // plays the walk animation
+        }
+
+        _oldPos = newPos; // updates old position 
+    }
+
 
     
 }
