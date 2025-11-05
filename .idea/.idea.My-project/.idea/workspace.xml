@@ -6,12 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="32b5db07-06d1-4962-9611-1184ba544590" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.My-project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.My-project/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Actual_game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Actual_game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Actual_game/NavMesh-NavMesh Surface.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Actual_game/NavMesh-NavMesh Surface.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Actual_game/NavMesh-NavMesh.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Actual_game/NavMesh-NavMesh.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Actual_game/NavMesh-Plane.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Actual_game/NavMesh-Plane.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlatformController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlatformController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/camara_controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/camara_controller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/enemyScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/enemyScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/zLock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/zLock.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +25,12 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BulletController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -127,7 +130,7 @@
       <workItem from="1762283261242" duration="74000" />
       <workItem from="1762283356594" duration="302000" />
       <workItem from="1762283707783" duration="2489000" />
-      <workItem from="1762341968487" duration="5503000" />
+      <workItem from="1762341968487" duration="9690000" />
     </task>
     <servers />
   </component>

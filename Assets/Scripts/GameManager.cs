@@ -1,9 +1,14 @@
-using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
-public class PlatformController : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
+    // makes game manager instance
+    public static GameManager Instance;
+    //gets the enemy count
+    private int _enemiesCount = EnemyManager.Instance.Count;
+
+    private int _counter = 0;
     // min/max positions for platforms to spawn
     [Header("Platform Positions")]
     [Range(-100, 100)] public float xMax = 100;
@@ -23,9 +28,17 @@ public class PlatformController : MonoBehaviour
     [Header("Gizmos")]
     [Range(1, 10)] public int gizmosZWidth = 4;
 
-    void Start()
+    void Awake()
     {
-
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // if there is an instance, and it is this one don't delete
+        }
+        else
+        {
+            Destroy(gameObject); // Only one manager exists
+        }
     }
 
     // draw gizmo in editor for clarity
@@ -44,6 +57,18 @@ public class PlatformController : MonoBehaviour
             var levelSize = new Vector3(xMax, 0.1f, gizmosZWidth);
             Gizmos.color = i > minLevels ? Color.orange : Color.orangeRed;
             Gizmos.DrawWireCube(levelCenter, levelSize);
+        }
+    }
+
+    private void Update()
+    {
+        if(_enemiesCount <= 0)
+        {
+            //draw.level[_counter] complete;
+            _counter = +1;
+            //call function that has the switch board of the platform placement 
+            // spawn enemies 
+            // draw level [_counter]
         }
     }
 }

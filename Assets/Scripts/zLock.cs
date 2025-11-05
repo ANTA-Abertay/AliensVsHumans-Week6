@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class zLock : MonoBehaviour
 {
-    public float z = 2;
+    public float z = 8;
 
     void FixedUpdate()
     {
