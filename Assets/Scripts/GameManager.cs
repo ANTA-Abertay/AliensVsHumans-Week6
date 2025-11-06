@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        // make singleton
         if (Instance == null)
         {
             Instance = this;
@@ -45,6 +46,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Only one manager exists
         }
+        
+        // generate platforms
+        _GeneratePlatforms();
     }
 
     private void Update()
@@ -61,11 +65,14 @@ public class GameManager : MonoBehaviour
     
     private void _GeneratePlatforms()
     {
-        /* TODO:
-         * - generate base platforms based on level number
-         * - calculate possible x positions for platforms
-         * - for every platform level
-         * -
+        /*  TODO:
+         *  [ ] generate base platforms based on level number
+         *      [ ] calculate possible x positions for platforms
+         *      [ ] for every platform level:
+         *          [ ] calculate valid platform positions
+         *          [ ] spawn random number of platforms
          */
+        
+        
     }
 }

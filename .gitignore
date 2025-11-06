@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 # macos things (Noah was here)
 .DS_Store
+
+# IntelliJ/Rider stuff
+.idea
