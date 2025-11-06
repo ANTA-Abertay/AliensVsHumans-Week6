@@ -11,4 +11,14 @@ public class BulletController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+
+        }
+    }
+    
 }
