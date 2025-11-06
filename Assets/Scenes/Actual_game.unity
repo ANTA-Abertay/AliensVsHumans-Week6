@@ -4894,8 +4894,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c393a6744d67b4b41907531f8a9a5558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerControl: {fileID: 0}
-  uiDoc: {fileID: 0}
+  playerControl: {fileID: 1961662357}
+  uiDoc: {fileID: 1382748199}
 --- !u!223 &1382748202
 Canvas:
   m_ObjectHideFlags: 0
@@ -4906,7 +4906,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1138581769}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -7653,7 +7653,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  onHealthChange: 0
   speed: 10
   bulletPrefab: {fileID: 1156228223691968319, guid: 1b2713cd2693e4656ae0e8bbd0a4f95c, type: 3}
   target: {fileID: 1961662356}
@@ -7705,7 +7704,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1138581769}
 --- !u!114 &1961662362
 MonoBehaviour:
   m_ObjectHideFlags: 0
