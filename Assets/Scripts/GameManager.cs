@@ -1,29 +1,17 @@
+using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
-<<<<<<<< HEAD:Assets/Scripts/LevelGenerator.cs
-public class LevelGenerator : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     // --- Public --- //
     
-========
-public class GameManager : MonoBehaviour
-{
     // makes game manager instance
     public static GameManager Instance;
-    //gets the enemy count
-    private int _enemiesCount = EnemyManager.Instance.Count;
-
-    private int _counter = 0;
->>>>>>>> main:Assets/Scripts/GameManager.cs
+    
     // min/max positions for platforms to spawn
     [Header("Platform Positions")]
     [Range(-100, 100)] public float xMax = 100;
-
-    // min/max number of levels that platforms should spawn on
-    [Header("Platform Levels")]
-    [Range(1, 10)] public int minLevels = 3;
-    [Range(1, 10)] public int maxLevels = 5;
     [Range(0, 20)] public int levelSpacing = 10;
 
     // min/max number of platforms per level
@@ -36,7 +24,14 @@ public class GameManager : MonoBehaviour
     [Range(1, 10)] public int gizmosZWidth = 4;
     
     // --- Private --- //
-
+    
+    //gets the enemy count
+    private readonly int _enemiesCount = EnemyManager.Instance.Count;
+    
+    // the current level
+    private int _currentLevel = 1;
+    
+    // the positions of all platforms
     private Vector<Vector<Vector3>> _platforms;
 
     void Awake()
@@ -44,40 +39,11 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // if there is an instance, and it is this one don't delete
+            DontDestroyOnLoad(gameObject); // if there is an instance, and it is this one, don't delete
         }
         else
         {
             Destroy(gameObject); // Only one manager exists
-        }
-    }
-
-    void _GeneratePlatforms()
-    {
-        
-    }
-
-    // draw gizmo in editor for clarity
-    void OnDrawGizmosSelected()
-    {
-        // draw horizontal planes for minimum levels
-        for (var i = 1; i <= maxLevels; i++)
-        {
-            var levelCenter = transform.position + new Vector3(xMax / 2, i * levelSpacing, 0);
-            var levelSize = new Vector3(xMax, 0.1f, gizmosZWidth);
-            
-            Gizmos.color = i > minLevels ? Color.orange : Color.orangeRed;
-            Gizmos.DrawWireCube(levelCenter, levelSize);
-        }
-        
-        // draw vertical planes for platform numbers
-        for (var i = 1; i <= maxPlatforms; i++)
-        {
-            var platformCenter = transform.position + new Vector3(xMax / (maxPlatforms+1) * i, maxLevels * levelSpacing / 2.0f, 0);
-            var platformSize = new Vector3(0.1f, maxLevels * levelSpacing, gizmosZWidth);
-            
-            Gizmos.color = i > minPlatforms ? Color.greenYellow: Color.green;
-            Gizmos.DrawWireCube(platformCenter, platformSize);
         }
     }
 
@@ -86,10 +52,20 @@ public class GameManager : MonoBehaviour
         if(_enemiesCount <= 0)
         {
             //draw.level[_counter] complete;
-            _counter = +1;
+            _currentLevel = +1;
             //call function that has the switch board of the platform placement 
             // spawn enemies 
             // draw level [_counter]
         }
+    }
+    
+    private void _GeneratePlatforms()
+    {
+        /* TODO:
+         * - generate base platforms based on level number
+         * - calculate possible x positions for platforms
+         * - for every platform level
+         * -
+         */
     }
 }
