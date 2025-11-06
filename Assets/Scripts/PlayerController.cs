@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using System; 
 
 
 public class PlayerController : MonoBehaviour
@@ -11,16 +11,17 @@ public class PlayerController : MonoBehaviour
     private float _timer;
     private Vector2 _movement;
     public int health = 10;
-    private int _currentHealth = 10;
-    public bool onHealthChange = false;
+    public static  int CurrentHealth = 10; 
+    public event Action OnHealthChange;
     public float speed = 10;
     private Vector3 _oldPos;
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
-    GameObject _enemy;
+    
     GameObject _player;
-
+    
+    
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -94,24 +95,33 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        var posDif = (_enemy.transform.position - _player.transform.position);
-        if (posDif.magnitude < 5)
-        {
-            if(_timer <= 0)
-            {
-                //deal damage 
-                GameObject.Find("Player").GetComponent<PlayerController>().health -= 2;
-                if (_currentHealth != health)
-                {
-                    onHealthChange = true;
-                    _currentHealth = health;
-                    onHealthChange = false;
-                }
-                _timer = 300;
-            }
-            _timer -= Time.deltaTime;
 
+        
+        
+        EnemyScript[] enemies = FindObjectsByType<EnemyScript>(FindObjectsSortMode.InstanceID);
+        foreach (var enemy in enemies)
+        {
+
+
+            var posDif = (enemy.transform.position - _player.transform.position);
+            if (posDif.magnitude < 5)
+            {
+                if (_timer <= 0)
+                {
+                    health -= 2;
+                    if (CurrentHealth != health)
+                    {
+                        CurrentHealth = health;
+                        OnHealthChange?.Invoke();
+                    }
+
+                    _timer = 300;
+                }
+            }
+
+            _timer -= Time.deltaTime;
         }
+        
     }
 
    
