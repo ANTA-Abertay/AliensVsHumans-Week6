@@ -1,7 +1,6 @@
-
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 
 
 public class PlayerController : MonoBehaviour
@@ -12,17 +11,21 @@ public class PlayerController : MonoBehaviour
     private float _timer;
     private Vector2 _movement;
     public int health = 10;
+    private int _currentHealth = 10;
+    public bool onHealthChange = false;
     public float speed = 10;
     private Vector3 _oldPos;
     public GameObject bulletPrefab;
     public Transform target;
     public float rotationSpeed;
-    
+    GameObject _enemy;
+    GameObject _player;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _oldPos = gameObject.transform.position;
+        
     }
 
     // This function is called when a move input is detected.
@@ -42,10 +45,11 @@ public class PlayerController : MonoBehaviour
 
     void OnJump()
     {
+        
        if(_timer <= 0)
        {
            Shoot();
-           _timer = 300;
+           _timer = 150;
        }
         
     }
@@ -90,9 +94,27 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        var posDif = (_enemy.transform.position - _player.transform.position);
+        if (posDif.magnitude < 5)
+        {
+            if(_timer <= 0)
+            {
+                //deal damage 
+                GameObject.Find("Player").GetComponent<PlayerController>().health -= 2;
+                if (_currentHealth != health)
+                {
+                    onHealthChange = true;
+                    _currentHealth = health;
+                    onHealthChange = false;
+                }
+                _timer = 300;
+            }
+            _timer -= Time.deltaTime;
+
+        }
     }
 
-
+   
     
 }
 

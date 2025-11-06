@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32b5db07-06d1-4962-9611-1184ba544590" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings 2.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.My-project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.My-project/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Actual_game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Actual_game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BulletController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BulletController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/camara_controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/camara_controller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/enemyScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/enemyScript.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +45,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "Ailey",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
