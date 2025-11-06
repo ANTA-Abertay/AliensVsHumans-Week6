@@ -1,4 +1,5 @@
 
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody _mRigidbody;
     Vector3 _mEulerAngleVelocity;
     private Rigidbody _rb;
-    
+    private int time
     private Vector2 _movement;
     public int health = 10;
     public float speed = 10;
@@ -41,10 +42,15 @@ public class PlayerController : MonoBehaviour
 
     void OnJump()
     {
-        Shoot();
+       if(time <= 0)
+        {
+            Shoot();
+            time = 300;
+        }
+        
     }
 
-    void Shoot()
+    Shoot()
     {
         // Spawn a bullet and store a reference to it so you can manipulate its values.
         GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
@@ -56,6 +62,7 @@ public class PlayerController : MonoBehaviour
         if (rb != null)
             rb.AddForce(new Vector2(_movement.x, _movement.y), ForceMode.Impulse);
         Debug.Log($"Movement input: {_movement}");
+        
 
        
     }
@@ -65,7 +72,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f); // only moves in x-axis
         _rb.AddForce(movement * speed); // times the x-axis with speed so player moves
-        
+        time.deltatime -= 1.f;
     }
 
     void Update()
@@ -78,6 +85,9 @@ public class PlayerController : MonoBehaviour
         }
 
         _oldPos = newPos; // updates old position 
+
+
+        
     }
 
 
