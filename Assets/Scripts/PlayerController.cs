@@ -86,8 +86,10 @@ public class PlayerController : MonoBehaviour
 
         _oldPos = newPos; // updates old position 
 
-
-        
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
 
