@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody _mRigidbody;
     Vector3 _mEulerAngleVelocity;
     private Rigidbody _rb;
-    private int timmer
+    private float _timer;
     private Vector2 _movement;
     public int health = 10;
     public float speed = 10;
@@ -42,15 +42,15 @@ public class PlayerController : MonoBehaviour
 
     void OnJump()
     {
-       if(time <= 0)
-        {
-            Shoot();
-            timmer = 300;
-        }
+       if(_timer <= 0)
+       {
+           Shoot();
+           _timer = 300;
+       }
         
     }
 
-    Shoot()
+    void Shoot()
     {
         // Spawn a bullet and store a reference to it so you can manipulate its values.
         GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f); // only moves in x-axis
         _rb.AddForce(movement * speed); // times the x-axis with speed so player moves
-        timmer -= 1.f * Time.deltatime;
+        _timer -= Time.deltaTime;
     }
 
     void Update()
