@@ -50,12 +50,10 @@ public class PlayerController : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
         if (_rb != null)
             _rb.AddForce(Vector3.up * 80f,ForceMode.Force);
-        Debug.Log(_rb.linearVelocity);
         // Apply force if using Rigidbody
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
             rb.AddForce(new Vector2(_movement.x, _movement.y), ForceMode.Impulse);
-        Debug.Log($"Movement input: {_movement}");
 
        
     }

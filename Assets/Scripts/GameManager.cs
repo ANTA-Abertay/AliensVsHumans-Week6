@@ -1,5 +1,8 @@
+using System;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
 public class GameManager : MonoBehaviour
@@ -8,6 +11,10 @@ public class GameManager : MonoBehaviour
     
     // makes game manager instance
     public static GameManager Instance;
+    
+    // the platform prefab to create
+    [Header("Platforms")]
+    public GameObject platformPrefab;
     
     // min/max positions for platforms to spawn
     [Header("Platform Positions")]
@@ -22,6 +29,7 @@ public class GameManager : MonoBehaviour
     // Gizmos z width. Not used in actual generator
     [Header("Gizmos")]
     [Range(1, 10)] public int gizmosZWidth = 4;
+    [Range(1, 10)] public int gizmosCurrentLevel = 1;
     
     // --- Private --- //
     
@@ -46,8 +54,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Only one manager exists
         }
-        
-        // generate platforms
+    }
+
+    void Start()
+    {
         _GeneratePlatforms();
     }
 
@@ -73,6 +83,22 @@ public class GameManager : MonoBehaviour
          *          [ ] spawn random number of platforms
          */
         
+        Debug.Log("Generating platforms");
         
+        // clear all platforms (if any exist)
+        _platforms = new Vector<Vector<Vector3>>();
+
+        // generate the bottom layer of platforms
+        for (int level = 0; level <= _currentLevel; level++)
+        {
+            // get the x position
+            var xPos = xMax / _currentLevel;
+            var pos = new Vector3(xPos, _currentLevel * levelSpacing, 0);
+            
+            // spawn platform
+            Instantiate(platformPrefab, pos, Quaternion.Euler(Vector3.zero));
+            
+            Debug.Log("Platform spawned at " + pos);
+        }
     }
 }

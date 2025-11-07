@@ -3129,11 +3129,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8f86e6edd7346a19cd57fbdb600452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformPrefab: {fileID: 780740520290179358, guid: 0874cd8dbb71048cf98e6a3ce3fb3a12, type: 3}
   xMax: 100
   levelSpacing: 20
   minPlatforms: 1
   maxPlatforms: 2
   gizmosZWidth: 4
+  gizmosCurrentLevel: 1
 --- !u!1 &872529283 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b0231c0f9881109428da6318472c57c0, type: 3}
