@@ -1,33 +1,40 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System; 
+using System;
+using UnityEngine.Events;
+
 
 
 public class PlayerController : MonoBehaviour
 {
+    GameObject _player;
     Rigidbody _mRigidbody;
     Vector3 _mEulerAngleVelocity;
+    
     private Rigidbody _rb;
-    private float _timer;
     private Vector2 _movement;
-    public int health = 10;
-    public static  int CurrentHealth = 10; 
-    public event Action OnHealthChange;
-    public float speed = 10;
     private Vector3 _oldPos;
-    public GameObject bulletPrefab;
+    private CapsuleCollider _Collider;
+    private float _enemyTimer;
+    private float _jumpTimer;
+    
+    public LayerMask layerMask;
+    public GameObject bulletPrefab;       
     public Transform target;
+    public static int CurrentHealth = 10;
+    public int health = 10;
+    public float speed = 10;
     public float rotationSpeed;
-    
-    GameObject _player;
-    
-    
+
+
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _oldPos = gameObject.transform.position;
-        
+        _Collider = GetComponent<CapsuleCollider>();
     }
+
 
     // This function is called when a move input is detected.
     void OnMove(InputValue movementValue)
@@ -46,30 +53,27 @@ public class PlayerController : MonoBehaviour
 
     void OnJump()
     {
-        
-       if(_timer <= 0)
-       {
-           Shoot();
-           _timer = 150;
-       }
-        
+        _rb.AddForce(Vector3.up * 80f, ForceMode.Force);
+        if (_jumpTimer <= 0)
+        {
+            Shoot();
+            _jumpTimer = 2.5f;
+        }
+
     }
 
     void Shoot()
     {
         // Spawn a bullet and store a reference to it so you can manipulate its values.
         GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-        if (_rb != null)
-            _rb.AddForce(Vector3.up * 80f,ForceMode.Force);
-        Debug.Log(_rb.linearVelocity);
         // Apply force if using Rigidbody
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
             rb.AddForce(new Vector2(_movement.x, _movement.y), ForceMode.Impulse);
         Debug.Log($"Movement input: {_movement}");
-        
 
-       
+
+
     }
 
     // FixedUpdate is called once per fixed frame-rate frame.
@@ -77,7 +81,26 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f); // only moves in x-axis
         _rb.AddForce(movement * speed); // times the x-axis with speed so player moves
-        _timer -= Time.deltaTime;
+        _enemyTimer -= Time.fixedDeltaTime;
+        _jumpTimer = Time.fixedDeltaTime;
+
+
+        // Cast a sphere wrapping character controller 10 meters forward
+        // to see if it is about to hit anything.
+        //if (Physics.SphereCast(transform.position, _Collider.height*0.5f, transform.forward, out hit, 2.0f, layerMask))
+        Collider[] colliders = Physics.OverlapSphere(_Collider.center, _Collider.height * 0.5f, layerMask);
+        while(colliders.Length > 0)
+        {
+            if (_enemyTimer <= 0)
+            {
+                health -= 2;
+                
+
+                _enemyTimer = 2.0f;
+              
+            }
+        }
+
     }
 
     void Update()
@@ -96,38 +119,15 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        
-        
-        EnemyScript[] enemies = FindObjectsByType<EnemyScript>(FindObjectsSortMode.InstanceID);
-        foreach (var enemy in enemies)
-        {
-
-
-            var posDif = (enemy.transform.position - _player.transform.position);
-            if (posDif.magnitude < 5)
-            {
-                if (_timer <= 0)
-                {
-                    health -= 2;
-                    if (CurrentHealth != health)
-                    {
-                        CurrentHealth = health;
-                        OnHealthChange?.Invoke();
-                    }
-
-                    _timer = 300;
-                }
-            }
-
-            _timer -= Time.deltaTime;
-        }
-        
     }
-
-   
-    
 }
+    
 
+
+
+
+
+       
 
     
 

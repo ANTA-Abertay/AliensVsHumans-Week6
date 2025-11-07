@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class EnemyScript : MonoBehaviour
 {
     NavMeshAgent _enemy;
