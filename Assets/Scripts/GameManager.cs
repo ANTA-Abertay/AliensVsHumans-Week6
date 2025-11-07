@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -25,9 +26,10 @@ public class GameManager : MonoBehaviour
     [Space]
     [Range(1, 10)] public int minPlatforms = 1;
     [Range(1, 10)] public int maxPlatforms = 2;
+    [Range(0, 1)] public float platformSpawnProbability = 0.5f;
     
     [Header("Debug")]
-    [Range(1, 10)] public int debugCurrentLevel = 1;
+    [Range(0, 10)] public int debugCurrentLevel = 1;
     
     // --- Private --- //
     
@@ -39,6 +41,9 @@ public class GameManager : MonoBehaviour
     
     // the positions of all platforms
     private List<List<Vector3>> _platforms;
+    
+    // platform raycast detect mask
+    private LayerMask layerMask;
 
     void Awake()
     {
@@ -52,6 +57,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Only one manager exists
         }
+        
+        // create platform raycast detect mask
+        layerMask = LayerMask.GetMask("Terrain", "Player", "Bullet", "Enemy");
     }
 
     void Start()
@@ -78,11 +86,10 @@ public class GameManager : MonoBehaviour
          *      [ ] calculate possible x positions for platforms
          *      [ ] for every platform level:
          *          [ ] calculate valid platform positions
-         *          [ ] spawn random number of platforms
-         */
+        */
         
-        // DEBUG: Force higher level
-        var _currentLevel = debugCurrentLevel;
+        if (debugCurrentLevel > 0)
+            _currentLevel = debugCurrentLevel;
         
         // calculate all possible x positions for the platforms
         var platColsCount = _currentLevel * 2 + 1;
@@ -100,18 +107,34 @@ public class GameManager : MonoBehaviour
         for (var level = 0; level < _currentLevel; level++)
         {
             _platforms.Add(new List<Vector3>());
-            
-            // for every place on a level that platforms could spawn
-            for (var colIndex = 0; colIndex < platColsX.Count; colIndex++)
+
+            while (_platforms[level].Count < minPlatforms)
             {
-                // calcuate position for platform
-                var pos = new Vector3(platColsX[colIndex], levelSpacing * level + levelYOffset, zLock);
-                
-                // remember the position of this platform
-                _platforms[level].Add(pos);
-                
-                // spawn the platform
-                Instantiate(platformPrefab, pos, Quaternion.Euler(Vector3.zero));
+                for (var colIndex = 0; colIndex < platColsX.Count; colIndex++)
+                {
+                    // stop if we have reached max platforms
+                    if (_platforms[level].Count >= maxPlatforms)
+                        break;
+
+                    // decide randomly if a platform should be spawned. if not? continue!
+                    if (!(Random.value < platformSpawnProbability)) continue;
+                    
+                    // calculate position for platform
+                    var pos = new Vector3(platColsX[colIndex], levelSpacing * level + levelYOffset, zLock);
+                    
+                    // a platform should not be spawned if there is one directly below
+                    // RaycastHit hit;
+                    // if (Physics.Raycast(pos, transform.TransformDirection(Vector3.down), out hit, levelSpacing * 1.5f, layerMask))
+                    //     continue;
+                    //
+                    // Debug.DrawRay(pos, Vector3.down * levelSpacing * 1.5f, Color.white, 100);
+                        
+                    // remember the position of this platform
+                    _platforms[level].Add(pos);
+
+                    // spawn the platform
+                    Instantiate(platformPrefab, pos, Quaternion.Euler(Vector3.zero));
+                }
             }
         }
     }

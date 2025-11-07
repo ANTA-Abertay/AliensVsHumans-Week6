@@ -12,7 +12,6 @@ public class EnemyManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log($"Instantiated manager");
         }
         else
         {
