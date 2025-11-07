@@ -12,6 +12,7 @@ public class EnemyManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Debug.Log($"Instantiated manager");
         }
         else
         {
@@ -22,6 +23,12 @@ public class EnemyManager : MonoBehaviour
     public void Register(GameObject enemy) //adds enemies
     {
         _enemies.Add(enemy);
+    }
+
+    public void RegisterAndInstantiate(GameObject enemy, Vector3 position, Quaternion rotation)
+    {
+        _enemies.Add(enemy);
+        Instantiate(gameObject, position, rotation);
     }
 
     public void Unregister(GameObject enemy)//deletes enemies

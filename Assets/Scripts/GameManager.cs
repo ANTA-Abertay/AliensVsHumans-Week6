@@ -1,7 +1,5 @@
-using System;
-using System.Numerics;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -17,30 +15,30 @@ public class GameManager : MonoBehaviour
     public GameObject platformPrefab;
     
     // min/max positions for platforms to spawn
-    [Header("Platform Positions")]
-    [Range(-100, 100)] public float xMax = 100;
-    [Range(0, 20)] public int levelSpacing = 10;
+    [Space]
+    [Range(-10, 10)] public float zLock = 0;
+    [Range(-10, 10)] public float levelXSpacing = 0;
+    [Range(0, 10)] public float levelYOffset = 0;
+    [Range(0, 10)] public int levelSpacing = 5;
 
     // min/max number of platforms per level
-    [Header("Platform Count")]
+    [Space]
     [Range(1, 10)] public int minPlatforms = 1;
     [Range(1, 10)] public int maxPlatforms = 2;
     
-    // Gizmos z width. Not used in actual generator
-    [Header("Gizmos")]
-    [Range(1, 10)] public int gizmosZWidth = 4;
-    [Range(1, 10)] public int gizmosCurrentLevel = 1;
+    [Header("Debug")]
+    [Range(1, 10)] public int debugCurrentLevel = 1;
     
     // --- Private --- //
     
     //gets the enemy count
-    private readonly int _enemiesCount = EnemyManager.Instance.Count;
+    // private int _enemiesCount = EnemyManager.Instance.Count;
     
     // the current level
     private int _currentLevel = 1;
     
     // the positions of all platforms
-    private Vector<Vector<Vector3>> _platforms;
+    private List<List<Vector3>> _platforms;
 
     void Awake()
     {
@@ -63,14 +61,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(_enemiesCount <= 0)
-        {
-            //draw.level[_counter] complete;
-            _currentLevel = +1;
-            //call function that has the switch board of the platform placement 
-            // spawn enemies 
-            // draw level [_counter]
-        }
+        // if(_enemiesCount <= 0)
+        // {
+        //     //draw.level[_counter] complete;
+        //     _currentLevel = +1;
+        //     //call function that has the switch board of the platform placement 
+        //     // spawn enemies 
+        //     // draw level [_counter]
+        // }
     }
     
     private void _GeneratePlatforms()
@@ -83,22 +81,38 @@ public class GameManager : MonoBehaviour
          *          [ ] spawn random number of platforms
          */
         
-        Debug.Log("Generating platforms");
+        // DEBUG: Force higher level
+        var _currentLevel = debugCurrentLevel;
+        
+        // calculate all possible x positions for the platforms
+        var platColsCount = _currentLevel * 2 + 1;
+        var platColsX = new List<float>();
+        for (var i = 0; i < platColsCount; i++)
+        {
+            //platColsX.Add(xMax / platColsCount * i);
+            platColsX.Add(-(levelXSpacing * i));
+        }
         
         // clear all platforms (if any exist)
-        _platforms = new Vector<Vector<Vector3>>();
+        _platforms = new List<List<Vector3>>();
 
         // generate the bottom layer of platforms
-        for (int level = 0; level <= _currentLevel; level++)
+        for (var level = 0; level < _currentLevel; level++)
         {
-            // get the x position
-            var xPos = xMax / _currentLevel;
-            var pos = new Vector3(xPos, _currentLevel * levelSpacing, 0);
+            _platforms.Add(new List<Vector3>());
             
-            // spawn platform
-            Instantiate(platformPrefab, pos, Quaternion.Euler(Vector3.zero));
-            
-            Debug.Log("Platform spawned at " + pos);
+            // for every place on a level that platforms could spawn
+            for (var colIndex = 0; colIndex < platColsX.Count; colIndex++)
+            {
+                // calcuate position for platform
+                var pos = new Vector3(platColsX[colIndex], levelSpacing * level + levelYOffset, zLock);
+                
+                // remember the position of this platform
+                _platforms[level].Add(pos);
+                
+                // spawn the platform
+                Instantiate(platformPrefab, pos, Quaternion.Euler(Vector3.zero));
+            }
         }
     }
 }
