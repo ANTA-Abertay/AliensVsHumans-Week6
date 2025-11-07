@@ -1,20 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
-using UnityEngine.Events;
+
 
 
 
 public class PlayerController : MonoBehaviour
 {
     GameObject _player;
+    public GameObject bulletSpawnBox;
     Rigidbody _mRigidbody;
     Vector3 _mEulerAngleVelocity;
     
     private Rigidbody _rb;
     private Vector2 _movement;
     private Vector3 _oldPos;
-    private CapsuleCollider _Collider;
+    private CapsuleCollider _collider;
     private float _enemyTimer;
     private float _jumpTimer;
     
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _oldPos = gameObject.transform.position;
-        _Collider = GetComponent<CapsuleCollider>();
+        _collider = GetComponent<CapsuleCollider>();
     }
 
 
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     void Shoot()
     {
         // Spawn a bullet and store a reference to it so you can manipulate its values.
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnBox.transform.position, bulletSpawnBox.transform.rotation);
         // Apply force if using Rigidbody
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
@@ -86,14 +86,14 @@ public class PlayerController : MonoBehaviour
         // Cast a sphere wrapping character controller 10 meters forward
         // to see if it is about to hit anything.
         //if (Physics.SphereCast(transform.position, _Collider.height*0.5f, transform.forward, out hit, 2.0f, layerMask))
-        Collider[] colliders = Physics.OverlapSphere(_Collider.center, _Collider.height * 0.5f, layerMask);
-        while(colliders.Length > 0)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _collider.height * 0.3f, layerMask);
+
+        if (colliders.Length > 0)
         {
-            if(_enemyTimer <= 0.0f)
+            if (_enemyTimer <= 0.0f)
             {
                 health -= 2;
                 _enemyTimer = 2.0f;
-              
             }
         }
 

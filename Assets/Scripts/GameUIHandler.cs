@@ -18,7 +18,7 @@ public class GameUIHandler : MonoBehaviour
     {
         _mHealthBarMask = uiDoc.rootVisualElement.Q<VisualElement>("HealthBarMask");
         _mHealthLabel = uiDoc.rootVisualElement.Q<Label>("HealthLabel");
-
+        HealthChanged();
     }
 
     private void Update()
@@ -41,8 +41,8 @@ public class GameUIHandler : MonoBehaviour
     void HealthChanged()
     {
         _mHealthLabel.text = $"{player.health}/{_maxHealth}";
-        float healthRatio = _maxHealth / player.health ;
-        float healthPercent = (100 *  healthRatio);
-        _mHealthBarMask.style.width = (healthPercent);
+        float healthPercent = 100f * ((float)player.health / _maxHealth);
+        _mHealthBarMask.style.width = new Length(healthPercent, LengthUnit.Percent);
+
     }
 }
