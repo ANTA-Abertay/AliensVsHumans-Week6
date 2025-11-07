@@ -53,11 +53,11 @@ public class PlayerController : MonoBehaviour
 
     void OnJump()
     {
-        _rb.AddForce(Vector3.up * 80f, ForceMode.Force);
-        if (_jumpTimer <= 0)
+        _rb.AddForce(Vector3.up * 100f, ForceMode.Force);
+        if (_jumpTimer <= 0.0f)
         {
             Shoot();
-            _jumpTimer = 2.5f;
+            _jumpTimer = 1.0f;
         }
 
     }
@@ -81,9 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f); // only moves in x-axis
         _rb.AddForce(movement * speed); // times the x-axis with speed so player moves
-        _enemyTimer -= Time.fixedDeltaTime;
-        _jumpTimer = Time.fixedDeltaTime;
-
+        
 
         // Cast a sphere wrapping character controller 10 meters forward
         // to see if it is about to hit anything.
@@ -91,11 +89,9 @@ public class PlayerController : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(_Collider.center, _Collider.height * 0.5f, layerMask);
         while(colliders.Length > 0)
         {
-            if (_enemyTimer <= 0)
+            if(_enemyTimer <= 0.0f)
             {
                 health -= 2;
-                
-
                 _enemyTimer = 2.0f;
               
             }
@@ -105,6 +101,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        _enemyTimer -= Time.deltaTime;
+        _jumpTimer -= Time.deltaTime;
+
         Vector3 newPos = transform.position; // gets current position 
 
         if ((newPos.x - _oldPos.x) != 0) // checks if positions are different
