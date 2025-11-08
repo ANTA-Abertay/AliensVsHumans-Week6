@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     
     // makes game manager instance
     public static GameManager Instance;
-    
+
+    public int currentLevel = 1;
     // min/max positions for platforms to spawn
     [Header("Platform Positions")]
     [Range(-100, 100)] public float xMax = 100;
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
     private readonly int _enemiesCount = EnemyManager.Instance.Count;
     
     // the current level
-    private int _currentLevel = 1;
+    
     
     // the positions of all platforms
     private Vector<Vector<Vector3>> _platforms;
@@ -55,11 +56,10 @@ public class GameManager : MonoBehaviour
     {
         if(_enemiesCount <= 0)
         {
-            //draw.level[_counter] complete;
-            _currentLevel = +1;
+            currentLevel = +1;
             //call function that has the switch board of the platform placement 
             // spawn enemies 
-            // draw level [_counter]
+            
         }
     }
     

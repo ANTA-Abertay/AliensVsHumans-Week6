@@ -5733,6 +5733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8f86e6edd7346a19cd57fbdb600452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: 1
   xMax: 100
   levelSpacing: 20
   minPlatforms: 1
@@ -9290,6 +9291,7 @@ GameObject:
   - component: {fileID: 1382748199}
   - component: {fileID: 1382748202}
   - component: {fileID: 1382748201}
+  - component: {fileID: 1382748204}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -9347,6 +9349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c393a6744d67b4b41907531f8a9a5558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   player: {fileID: 1961662357}
   uiDoc: {fileID: 1382748199}
 --- !u!223 &1382748202
@@ -9367,11 +9370,19 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!222 &1382748204
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382748198}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1387791921
 PrefabInstance:
   m_ObjectHideFlags: 0
