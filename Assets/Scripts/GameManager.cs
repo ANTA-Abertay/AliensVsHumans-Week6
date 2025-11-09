@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
     
     // makes game manager instance
     public static GameManager Instance;
-
     public int currentLevel = 1;
+
+    private int _enemiesCount;
     // min/max positions for platforms to spawn
     [Header("Platform Positions")]
     [Range(-100, 100)] public float xMax = 100;
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
     // --- Private --- //
     
     //gets the enemy count
-    private readonly int _enemiesCount = EnemyManager.Instance.Count;
+    
     
     // the current level
     
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Only one manager exists
         }
-        
+         _enemiesCount = EnemyManager.Instance.Count;
         // generate platforms
         _GeneratePlatforms();
     }
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
     {
         if(_enemiesCount <= 0)
         {
-            currentLevel = +1;
+            currentLevel += 1;
             //call function that has the switch board of the platform placement 
             // spawn enemies 
             
