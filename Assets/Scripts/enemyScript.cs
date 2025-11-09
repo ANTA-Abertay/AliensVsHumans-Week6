@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class EnemyScript : MonoBehaviour
 {
     NavMeshAgent _enemy;
     GameObject _player;
     public int health = 10;
     private Vector3 _oldPos;
-
+    private float _timer;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,8 +38,13 @@ public class EnemyScript : MonoBehaviour
         var posDif = (_enemy.transform.position - _player.transform.position);
         if (posDif.magnitude < 5)
         {
-            //deal damage 
-            GameObject.Find("Player").GetComponent<PlayerController>().health -= 2;
+            if(_timer <= 0)
+            {
+                //deal damage 
+                GameObject.Find("Player").GetComponent<PlayerController>().health -= 2;
+                _timer = 300;
+            }
+            _timer -= Time.deltaTime;
 
         }
 
