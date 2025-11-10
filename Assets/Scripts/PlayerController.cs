@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-
-
 public class PlayerController : MonoBehaviour
 {
+    
+    // getting scripts and components
     GameObject _player;
     public GameObject bulletSpawnBox;
     Rigidbody _mRigidbody;
     Vector3 _mEulerAngleVelocity;
     
+    //private
     private Rigidbody _rb;
     private Vector2 _movement;
     private Vector3 _oldPos;
@@ -18,11 +18,12 @@ public class PlayerController : MonoBehaviour
     private float _enemyTimer;
     private float _jumpTimer;
     
+    //public
     public LayerMask layerMask;
     public GameObject bulletPrefab;       
     public Transform target;
-    public static int CurrentHealth = 10;
-    public int health = 10;
+    public static int CurrentHealth = 20;
+    public int health = 20;
     public float speed = 10;
     public float rotationSpeed;
     private int _level = 1;
@@ -30,9 +31,12 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
-        _oldPos = gameObject.transform.position;
+        //get components
         _collider = GetComponent<CapsuleCollider>();
+        _rb = GetComponent<Rigidbody>();
+        
+        //get position
+        _oldPos = gameObject.transform.position;
     }
 
 
@@ -53,11 +57,11 @@ public class PlayerController : MonoBehaviour
 
     void OnJump()
     {
-        _rb.AddForce(Vector3.up * 100f, ForceMode.Force);
-        if (_jumpTimer <= 0.0f)
+        _rb.AddForce(Vector3.up * 100f, ForceMode.Force); // make player jump regardless of bullet or not
+        if (_jumpTimer <= 0.0f) // if cooldown has finished
         {
             Shoot();
-            _jumpTimer = 1.0f;
+            _jumpTimer = 1.0f; // reset timer
         }
 
     }
@@ -77,26 +81,11 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 movement = new Vector3(_movement.x, 0.0f, 0.0f); // only moves in x-axis
         _rb.AddForce(movement * speed); // times the x-axis with speed so player moves
-        
-
-        // Cast a sphere wrapping character controller 10 meters forward
-        // to see if it is about to hit anything.
-        //if (Physics.SphereCast(transform.position, _Collider.height*0.5f, transform.forward, out hit, 2.0f, layerMask))
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _collider.height * 0.3f, layerMask);
-
-        if (colliders.Length > 0)
-        {
-            if (_enemyTimer <= 0.0f)
-            {
-                health -= 2;
-                _enemyTimer = 2.0f;
-            }
-        }
-
     }
 
     void Update()
     {
+        //set up timers 
         _enemyTimer -= Time.deltaTime;
         _jumpTimer -= Time.deltaTime;
 
@@ -109,29 +98,16 @@ public class PlayerController : MonoBehaviour
 
         _oldPos = newPos; // updates old position 
 
-        if (health <= 0)
+        if (health <= 0) // if dead
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // kill player
         }
 
-        if (GameManager.Instance.currentLevel != _level)
+        if (GameManager.Instance.currentLevel != _level) // check to see level up or not
         {
-            _level = GameManager.Instance.currentLevel;
-            health = 10;
+            _level = GameManager.Instance.currentLevel; // reset check
+            health += 10; // since you completed a level health resets
         }
 
     }
 }
-    
-
-
-
-
-
-       
-
-    
-
-
-
-

@@ -8,10 +8,11 @@ public class EnemyManager : MonoBehaviour
 
     void Awake()
     {
+        // make a singleton
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // if there is an instance, and it is this one, don't delete
         }
         else
         {
