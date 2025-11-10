@@ -173,8 +173,7 @@ public class GameManager : MonoBehaviour
         // clear the platforms
         _DestroyPlatforms();
         
-        // reset the navmesh and generate platforms
-        _surface.BuildNavMesh();
+        // generate platforms
         _GeneratePlatforms();
         
         // build the navmesh with the platforms and then spawn the enemies
