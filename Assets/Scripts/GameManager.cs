@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -9,7 +10,12 @@ public class GameManager : MonoBehaviour
     
     // makes game manager instance
     public static GameManager Instance;
+    
+    // the current level
     public int currentLevel = 1;
+    
+    // the nav mesh for the enemies
+    public NavMeshSurface surface;
     
     // platforms!
     [Header("Platforms")]
@@ -42,11 +48,10 @@ public class GameManager : MonoBehaviour
     [Range(0, 1)] public float enemySpawnProbability = 0.5f;
     // --- Private --- //
     
-    // the current enemy count
-    private int _enemiesCount;
-    
     // the positions of all platforms
-    private List<List<Vector3>> _platforms;
+    private List<List<GameObject>> _platforms;
+    
+    private GameObject _player;
 
     void Awake()
     {
@@ -60,21 +65,27 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Only one manager exists
         }
-        _enemiesCount = EnemyManager.Instance.Count;
-         
+        
+        // reset the navmesh and generate platforms
+        surface.BuildNavMesh();
         _GeneratePlatforms();
+        
+        // build the navmesh with the platforms and then spawn the enemies
+        surface.BuildNavMesh();
         _SpawnEnemies();
+    }
+
+    private void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Update()
     {
-        _enemiesCount = EnemyManager.Instance.Count;
-        if(_enemiesCount <= 0)
-        {
+        if(EnemyManager.Instance.Count <= 0)
+        { 
             currentLevel += 1;
-            //call function that has the switch board of the platform placement 
-            // spawn enemies 
-            
+            _ResetLevel();
         }
     }
     
@@ -88,14 +99,11 @@ public class GameManager : MonoBehaviour
             //platColsX.Add(xMax / platColsCount * i);
             platColsX.Add(-(levelXSpacing * i));
         }
-        
-        // clear all platforms (if any exist)
-        _platforms = new List<List<Vector3>>();
 
         // generate the bottom layer of platforms
         for (var level = 0; level < currentLevel; level++)
         {
-            _platforms.Add(new List<Vector3>());
+            _platforms.Add(new List<GameObject>());
 
             while (_platforms[level].Count < minPlatforms)
             {
@@ -110,12 +118,12 @@ public class GameManager : MonoBehaviour
 
                     // calculate position for platform
                     var pos = new Vector3(platColsX[colIndex], levelSpacing * level + levelYOffset, zLock);
+  
+                    // spawn the platform
+                    var platform = Instantiate(platformPrefab, pos, Quaternion.Euler(Vector3.zero));
                     
                     // remember the position of this platform
-                    _platforms[level].Add(pos);
-
-                    // spawn the platform
-                    Instantiate(platformPrefab, pos, Quaternion.Euler(Vector3.zero));
+                    _platforms[level].Add(platform);
                 }
             }
         }
@@ -127,12 +135,13 @@ public class GameManager : MonoBehaviour
         foreach (var level in _platforms)
         {
             // for every platform
-            foreach (var platPos in level)
+            foreach (var platform in level)
             {
                 // decide randomly if an enemy should be spawned. if not? continue the loop!
                 if (!(Random.value < enemySpawnProbability)) continue;
                 
                 // calculate the position to spawn the enemy
+                var platPos =  platform.transform.position;
                 var pos = new Vector3(platPos.x, platPos.y + enemyYOffset, platPos.z);
                 
                 // spawn the enemy
@@ -141,5 +150,37 @@ public class GameManager : MonoBehaviour
                 EnemyManager.Instance.Register(enemy);
             }
         }
+    }
+    
+    private void _DestroyPlatforms()
+    {
+        // delete the platforms
+        foreach (var level in _platforms)
+        {
+            foreach (var platform in level)
+            {
+                Destroy(platform);
+            }
+        }
+        
+        // clear platform list
+        _platforms.Clear();
+    }
+
+    private void _ResetLevel()
+    {
+        // clear the platforms
+        _DestroyPlatforms();
+        
+        // reset the navmesh and generate platforms
+        surface.BuildNavMesh();
+        _GeneratePlatforms();
+        
+        // build the navmesh with the platforms and then spawn the enemies
+        surface.BuildNavMesh();
+        _SpawnEnemies();
+        
+        // bring the player back to the spawn
+        _player.transform.position = Vector3.zero;
     }
 }

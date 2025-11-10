@@ -70,10 +70,6 @@ public class PlayerController : MonoBehaviour
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
             rb.AddForce(new Vector2(_movement.x, _movement.y), ForceMode.Impulse);
-        Debug.Log($"Movement input: {_movement}");
-
-
-
     }
 
     // FixedUpdate is called once per fixed frame-rate frame.
