@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance;
-    private List<GameObject> _enemies = new List<GameObject>();
+    public List<GameObject> _enemies = new List<GameObject>();
 
     void Awake()
     {
@@ -22,12 +22,6 @@ public class EnemyManager : MonoBehaviour
     public void Register(GameObject enemy) //adds enemies
     {
         _enemies.Add(enemy);
-    }
-
-    public void RegisterAndInstantiate(GameObject enemy, Vector3 position, Quaternion rotation)
-    {
-        _enemies.Add(enemy);
-        Instantiate(gameObject, position, rotation);
     }
 
     public void Unregister(GameObject enemy)//deletes enemies
