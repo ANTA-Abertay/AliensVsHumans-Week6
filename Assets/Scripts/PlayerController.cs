@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    GameManager _gameManager;
     GameObject _player;
     public GameObject bulletSpawnBox;
     Rigidbody _mRigidbody;
@@ -119,9 +118,9 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (_gameManager.currentLevel != _level)
+        if (GameManager.Instance.currentLevel != _level)
         {
-            _level = _gameManager.currentLevel;
+            _level = GameManager.Instance.currentLevel;
             health = 10;
         }
 
