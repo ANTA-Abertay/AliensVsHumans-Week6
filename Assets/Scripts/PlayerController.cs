@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    GameManager _gameManager;
     GameObject _player;
     public GameObject bulletSpawnBox;
     Rigidbody _mRigidbody;
@@ -25,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public int health = 10;
     public float speed = 10;
     public float rotationSpeed;
-
+    private int _level = 1;
 
 
     void Start()
@@ -116,6 +117,12 @@ public class PlayerController : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+
+        if (_gameManager.currentLevel != _level)
+        {
+            _level = _gameManager.currentLevel;
+            health = 10;
         }
 
     }
