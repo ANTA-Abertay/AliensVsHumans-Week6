@@ -30,6 +30,16 @@ public class GameManager : MonoBehaviour
     [Range(1, 10)] public int maxPlatforms = 2;
     [Range(0, 1)] public float platformSpawnProbability = 0.5f;
     
+    // enemy spawning
+    [Header("Enemies")]
+    
+    // the enemy prefab to spawn
+    public GameObject enemyPrefab;
+    
+    // enemy spawn parameters
+    [Space]
+    [Range(0, 2)] public float enemyYOffset;
+    [Range(0, 1)] public float enemySpawnProbability = 0.5f;
     // --- Private --- //
     
     // the current enemy count
@@ -52,8 +62,8 @@ public class GameManager : MonoBehaviour
         }
         _enemiesCount = EnemyManager.Instance.Count;
          
-        // generate platforms
         _GeneratePlatforms();
+        _SpawnEnemies();
     }
 
     private void Update()
@@ -118,8 +128,16 @@ public class GameManager : MonoBehaviour
             // for every platform
             foreach (var platPos in level)
             {
-                // TODO: spawn an enemy on/above a platform
-                // TODO: register the enemy with EnemyManager
+                // decide randomly if an enemy should be spawned. if not? continue the loop!
+                if (!(Random.value < enemySpawnProbability)) continue;
+                
+                // calculate the position to spawn the enemy
+                var pos = new Vector3(platPos.x, platPos.y + enemyYOffset, platPos.z);
+                
+                // spawn the enemy
+                var enemy = Instantiate(enemyPrefab, pos, Quaternion.Euler(Vector3.zero));
+                
+                EnemyManager.Instance.Register(enemy);
             }
         }
     }
