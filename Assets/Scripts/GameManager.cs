@@ -14,9 +14,6 @@ public class GameManager : MonoBehaviour
     // the current level
     public int currentLevel = 1;
     
-    // the nav mesh for the enemies
-    public NavMeshSurface surface;
-    
     // platforms!
     [Header("Platforms")]
     
@@ -52,6 +49,8 @@ public class GameManager : MonoBehaviour
     private List<List<GameObject>> _platforms;
     
     private GameObject _player;
+    
+    private NavMeshSurface _surface;
 
     void Awake()
     {
@@ -65,19 +64,22 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Only one manager exists
         }
-        
-        // reset the navmesh and generate platforms
-        surface.BuildNavMesh();
+
+        _platforms = new List<List<GameObject>>();
         _GeneratePlatforms();
-        
-        // build the navmesh with the platforms and then spawn the enemies
-        surface.BuildNavMesh();
-        _SpawnEnemies();
     }
 
     private void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
+        // find and rebuild the navmesh
+        _surface = GameObject.Find("NavMesh").GetComponent<NavMeshSurface>();
+        _surface.BuildNavMesh();
+        
+        // spawn the enemies
+        _SpawnEnemies();
+        
+        // find the players
+        _player = GameObject.Find("Player");
     }
 
     private void Update()
@@ -109,9 +111,8 @@ public class GameManager : MonoBehaviour
             {
                 for (var colIndex = 0; colIndex < platColsX.Count; colIndex++)
                 {
-                    // stop if we have reached max platforms
-                    if (_platforms[level].Count >= maxPlatforms)
-                        break;
+                    // stop the loop if we have reached max platforms
+                    if (_platforms[level].Count >= maxPlatforms) break;
 
                     // decide randomly if a platform should be spawned. if not? continue the loop!
                     if (!(Random.value < platformSpawnProbability)) continue;
@@ -173,11 +174,11 @@ public class GameManager : MonoBehaviour
         _DestroyPlatforms();
         
         // reset the navmesh and generate platforms
-        surface.BuildNavMesh();
+        _surface.BuildNavMesh();
         _GeneratePlatforms();
         
         // build the navmesh with the platforms and then spawn the enemies
-        surface.BuildNavMesh();
+        _surface.BuildNavMesh();
         _SpawnEnemies();
         
         // bring the player back to the spawn
