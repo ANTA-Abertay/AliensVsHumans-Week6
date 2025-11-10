@@ -84,10 +84,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(EnemyManager.Instance.Count <= 0)
+        if(EnemyManager.Instance.Count <= 0) // checks for number of enemies
         { 
-            currentLevel += 1;
-            _ResetLevel();
+            currentLevel += 1; // if there are none the level increases
+            _ResetLevel(); //rebuilds level
         }
     }
     
@@ -182,5 +182,10 @@ public class GameManager : MonoBehaviour
         
         // bring the player back to the spawn
         _player.transform.position = Vector3.zero;
+    }
+    
+    void OnEscape()
+    {
+        Application.Quit(); // when escape pressed game closes
     }
 }
