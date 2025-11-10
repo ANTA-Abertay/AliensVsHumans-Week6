@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        _enemiesCount = EnemyManager.Instance.Count;
         if(_enemiesCount <= 0)
         {
             currentLevel += 1;
