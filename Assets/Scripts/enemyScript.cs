@@ -13,38 +13,35 @@ public class EnemyScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // get components
         _enemy = GetComponent<NavMeshAgent>();
         _player = GameObject.FindWithTag("Player");
+        
+        // set its position
         _oldPos = gameObject.transform.position;
     }
     
     void OnDisable()
     {
-        EnemyManager.Instance.Unregister(gameObject);
+        EnemyManager.Instance.Unregister(gameObject); //no longer counted
     }
     
     
     // Update is called once per frame
     void Update()
     {
+        _timer -= Time.deltaTime; // set up timer
+        _enemy.SetDestination(_player.transform.position); // set enemies target to player
         
-        _enemy.SetDestination(_player.transform.position);
-        
-        var posDif = (_enemy.transform.position - _player.transform.position);
-        if (posDif.magnitude < 0.5)
+        var posDif = (_enemy.transform.position - _player.transform.position); // gets distance between enemy and player
+        if (posDif.magnitude < 0.5) // if the enemy is withing range to attack
         {
-            if(_timer <= 0)
+            if(_timer <= 0) // if cooldown finished
             {
-                //deal damage 
-                GameObject.Find("Player").GetComponent<PlayerController>().health -= 2;
-                _timer = 300;
+                GameObject.Find("Player").GetComponent<PlayerController>().health -= 1; //deal damage 
+                _timer = 3; // reset cooldown
             }
-            _timer -= Time.deltaTime;
-
         }
-
-        
-        
         
         Vector3 newPos = transform.position; // gets current position 
 
@@ -52,22 +49,20 @@ public class EnemyScript : MonoBehaviour
         {
             GetComponent<Animation>().Play("walk"); // plays the walk animation
         }
-
         _oldPos = newPos; // updates old position 
         
+        if (health <= 0) // if dead
+        {
+            Destroy(gameObject); // delete itself
+        }    
     }
-
-    void OnTriggerEnter(Collider col)
+    
+    void OnTriggerEnter(Collider col) //if hit
     {
-        if(col.CompareTag("Bullet"))
+        if(col.CompareTag("Bullet"))  //if hit by a bullet
         {
-            health = health - 2;
-
+            health = health - 2; //takes damage
         }
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }        
     }
 }
 
