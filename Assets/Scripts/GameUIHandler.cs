@@ -3,7 +3,6 @@ using UnityEngine.UIElements;
 
 public class GameUIHandler : MonoBehaviour
 {
-    public GameManager gameManager;
     public PlayerController player;
     public UIDocument uiDoc;
 
@@ -29,7 +28,6 @@ public class GameUIHandler : MonoBehaviour
         _mLevelLabel.style.display = DisplayStyle.None;
         _labelVisible = false;
         HealthChanged();
-        _level = gameManager.currentLevel;
     }
 
     private void Update()
@@ -42,7 +40,8 @@ public class GameUIHandler : MonoBehaviour
                 HideLevelLabel();
             }
         }
-        _currentLevel = gameManager.currentLevel;
+
+        _currentLevel = GameManager.Instance.currentLevel;
         _health = player.health;
         
         if (_currentHealth != _health)
