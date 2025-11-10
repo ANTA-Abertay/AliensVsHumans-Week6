@@ -13572,7 +13572,7 @@ MonoBehaviour:
     m_Bits: 8
   bulletPrefab: {fileID: 1156228223691968319, guid: 1b2713cd2693e4656ae0e8bbd0a4f95c, type: 3}
   target: {fileID: 1961662356}
-  health: 10
+  health: 20
   speed: 10
   rotationSpeed: 500
 --- !u!111 &1961662359
