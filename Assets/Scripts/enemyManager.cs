@@ -24,6 +24,12 @@ public class EnemyManager : MonoBehaviour
         _enemies.Add(enemy);
     }
 
+    public void RegisterAndInstantiate(GameObject enemy, Vector3 position, Quaternion rotation)
+    {
+        _enemies.Add(enemy);
+        Instantiate(gameObject, position, rotation);
+    }
+
     public void Unregister(GameObject enemy)//deletes enemies
     {
         _enemies.Remove(enemy);

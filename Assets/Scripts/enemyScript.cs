@@ -18,15 +18,15 @@ public class EnemyScript : MonoBehaviour
         _oldPos = gameObject.transform.position;
     }
 
-    void OnEnable()
-    {
-        EnemyManager.Instance.Register(gameObject);
-    }
-
-    void OnDisable()
-    {
-        EnemyManager.Instance.Unregister(gameObject);
-    }
+    // void OnEnable()
+    // {
+    //     EnemyManager.Instance.Register(gameObject);
+    // }
+    //
+    // void OnDisable()
+    // {
+    //     EnemyManager.Instance.Unregister(gameObject);
+    // }
     
     
     // Update is called once per frame
