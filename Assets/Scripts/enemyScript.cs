@@ -31,7 +31,7 @@ public class EnemyScript : MonoBehaviour
         _enemy.SetDestination(_player.transform.position);
         
         var posDif = (_enemy.transform.position - _player.transform.position);
-        if (posDif.magnitude < 5)
+        if (posDif.magnitude < 2)
         {
             if(_timer <= 0)
             {
