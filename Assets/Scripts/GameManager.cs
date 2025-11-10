@@ -1,5 +1,6 @@
-using System.Numerics;
+using System.Collections.Generic;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
 public class GameManager : MonoBehaviour
@@ -9,32 +10,33 @@ public class GameManager : MonoBehaviour
     // makes game manager instance
     public static GameManager Instance;
     public int currentLevel = 1;
-
-    private int _enemiesCount;
+    
+    // platforms!
+    [Header("Platforms")]
+    
+    // the platform prefab to spawn
+    public GameObject platformPrefab;
+    
     // min/max positions for platforms to spawn
-    [Header("Platform Positions")]
-    [Range(-100, 100)] public float xMax = 100;
-    [Range(0, 20)] public int levelSpacing = 10;
+    [Space]
+    [Range(-10, 10)] public float zLock;
+    [Range(-10, 10)] public float levelXSpacing;
+    [Range(0, 10)] public float levelYOffset;
+    [Range(0, 10)] public float levelSpacing = 5;
 
     // min/max number of platforms per level
-    [Header("Platform Count")]
+    [Space]
     [Range(1, 10)] public int minPlatforms = 1;
     [Range(1, 10)] public int maxPlatforms = 2;
-    
-    // Gizmos z width. Not used in actual generator
-    [Header("Gizmos")]
-    [Range(1, 10)] public int gizmosZWidth = 4;
+    [Range(0, 1)] public float platformSpawnProbability = 0.5f;
     
     // --- Private --- //
     
-    //gets the enemy count
-    
-    
-    // the current level
-    
+    // the current enemy count
+    private int _enemiesCount;
     
     // the positions of all platforms
-    private Vector<Vector<Vector3>> _platforms;
+    private List<List<Vector3>> _platforms;
 
     void Awake()
     {
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject); // Only one manager exists
         }
          _enemiesCount = EnemyManager.Instance.Count;
+         
         // generate platforms
         _GeneratePlatforms();
     }
@@ -66,14 +69,58 @@ public class GameManager : MonoBehaviour
     
     private void _GeneratePlatforms()
     {
-        /*  TODO:
-         *  [ ] generate base platforms based on level number
-         *      [ ] calculate possible x positions for platforms
-         *      [ ] for every platform level:
-         *          [ ] calculate valid platform positions
-         *          [ ] spawn random number of platforms
-         */
+        // calculate all possible x positions for the platforms
+        var platColsCount = currentLevel * 2 + 1;
+        var platColsX = new List<float>();
+        for (var i = 0; i < platColsCount; i++)
+        {
+            //platColsX.Add(xMax / platColsCount * i);
+            platColsX.Add(-(levelXSpacing * i));
+        }
         
-        
+        // clear all platforms (if any exist)
+        _platforms = new List<List<Vector3>>();
+
+        // generate the bottom layer of platforms
+        for (var level = 0; level < currentLevel; level++)
+        {
+            _platforms.Add(new List<Vector3>());
+
+            while (_platforms[level].Count < minPlatforms)
+            {
+                for (var colIndex = 0; colIndex < platColsX.Count; colIndex++)
+                {
+                    // stop if we have reached max platforms
+                    if (_platforms[level].Count >= maxPlatforms)
+                        break;
+
+                    // decide randomly if a platform should be spawned. if not? continue the loop!
+                    if (!(Random.value < platformSpawnProbability)) continue;
+
+                    // calculate position for platform
+                    var pos = new Vector3(platColsX[colIndex], levelSpacing * level + levelYOffset, zLock);
+                    
+                    // remember the position of this platform
+                    _platforms[level].Add(pos);
+
+                    // spawn the platform
+                    Instantiate(platformPrefab, pos, Quaternion.Euler(Vector3.zero));
+                }
+            }
+        }
+    }
+
+    private void _SpawnEnemies()
+    {
+        // for every level
+        foreach (var level in _platforms)
+        {
+            // for every platform
+            foreach (var platPos in level)
+            {
+                // TODO: spawn an enemy on/above a platform
+                // TODO: register the enemy with EnemyManager
+            }
+        }
     }
 }
