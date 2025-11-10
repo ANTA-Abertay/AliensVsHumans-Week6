@@ -48,13 +48,14 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Only one manager exists
         }
-         _enemiesCount = EnemyManager.Instance.Count;
+         
         // generate platforms
         _GeneratePlatforms();
     }
 
     private void Update()
     {
+        _enemiesCount = EnemyManager.Instance.Count;
         if(_enemiesCount <= 0)
         {
             currentLevel += 1;
