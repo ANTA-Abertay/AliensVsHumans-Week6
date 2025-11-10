@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider _collider;
     private float _enemyTimer;
     private float _jumpTimer;
+    private float _deathDelaytimer;
     
     public LayerMask layerMask;
     public GameObject bulletPrefab;       
@@ -103,6 +104,7 @@ public class PlayerController : MonoBehaviour
     {
         _enemyTimer -= Time.deltaTime;
         _jumpTimer -= Time.deltaTime;
+        _deathDelaytimer -= Time.deltaTime;
 
         Vector3 newPos = transform.position; // gets current position 
 
@@ -115,7 +117,11 @@ public class PlayerController : MonoBehaviour
 
         if (health <= 0)
         {
-            gameObject.SetActive(false);
+            _deathDelaytimer = 1;
+            if (_deathDelaytimer <= 0)
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         if (GameManager.Instance.currentLevel != _level)
