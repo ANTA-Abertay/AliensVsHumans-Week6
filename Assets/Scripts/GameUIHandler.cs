@@ -13,8 +13,8 @@ public class GameUIHandler : MonoBehaviour
     private readonly int _maxHealth = 10;
     private int _health;
     private int _currentHealth = 10;
-    private int _currentLevel;
-    private int _level;
+    private int _currentLevel = 1;
+    private int _level = 1;
 
     private float _timer;
     private bool _labelVisible = false;
@@ -46,8 +46,8 @@ public class GameUIHandler : MonoBehaviour
         
         if (_currentHealth != _health)
         {
-            HealthChanged();
             _currentHealth = _health;
+            HealthChanged();
         }
         
         if (_level != _currentLevel)
@@ -69,7 +69,7 @@ public class GameUIHandler : MonoBehaviour
     void HealthChanged()
     {
         _mHealthLabel.text = $"{_currentHealth}/{_maxHealth}";
-        float healthPercent = ( (float)_currentHealth / (float)_maxHealth ) * 100f;
+        float healthPercent =  (((float)_currentHealth / (float)_maxHealth ) *100f);
         _mHealthBarMask.style.width = new Length(healthPercent, LengthUnit.Percent);
         _mHealthBarMask.MarkDirtyRepaint();
     }
